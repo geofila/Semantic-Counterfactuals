@@ -1,0 +1,12 @@
+README.md
+setup.py
+app/cece/__init__.py
+app/cece/queries.py
+app/cece/refine.py
+app/cece/wordnet.py
+app/cece/xDataset.py
+app/cece.egg-info/PKG-INFO
+app/cece.egg-info/SOURCES.txt
+app/cece.egg-info/dependency_links.txt
+app/cece.egg-info/requires.txt
+app/cece.egg-info/top_level.txt
