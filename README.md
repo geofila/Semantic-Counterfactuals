@@ -27,7 +27,7 @@ pip install cece
 
 ```python
 git clone https://github.com/geofila/Semantic-Counterfactuals.git
-cd CECE
+cd Semantic-Counterfactuals
 git install .
 ```
 

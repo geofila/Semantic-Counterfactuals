@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: cece
-Version: 0.0.6
+Version: 0.0.7
 Summary: Conceptual Edits as Counterfactual Explanations
 Home-page: UNKNOWN
 Author: Giorgos Filandrianos
@@ -35,7 +35,7 @@ Description: # Conceptual Edits as Counterfactual Explanations (CECE)
         
         ```python
         git clone https://github.com/geofila/Semantic-Counterfactuals.git
-        cd CECE
+        cd Semantic-Counterfactuals
         git install .
         ```
         
