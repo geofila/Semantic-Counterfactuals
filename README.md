@@ -2,7 +2,7 @@
 
 ![png](https://github.com/geofila/Semantic-Counterfactuals/blob/main/app/images/logo.png)
 
-**CECE: a powerful Python AI library for generating semantic counterfactual explanations for any machine learning model.**
+**CECE: a powerful Python library for generating semantic counterfactual explanations for any machine learning algorithm.**
 
 More information about the framework and the algorithm that the library uses can be found in the paper: [Choose your Data Wisely: A Framework for Semantic Counterfactuals
 ](https://arxiv.org/pdf/2305.17667.pdf).
