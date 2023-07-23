@@ -263,7 +263,7 @@ ds.find_edits(["car", "man"], ["woman", "truck"])
 
 
 ```python
-from xDataset import *
+from cece.xDataset import *
 
 # initialize an instance of the Dataset
 ds = xDataset(dataset = [["tree", "man"],

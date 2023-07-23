@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: cece
-Version: 0.0.7
+Version: 0.0.8
 Summary: Conceptual Edits as Counterfactual Explanations
 Home-page: UNKNOWN
 Author: Giorgos Filandrianos
@@ -271,7 +271,7 @@ Description: # Conceptual Edits as Counterfactual Explanations (CECE)
         
         
         ```python
-        from xDataset import *
+        from cece.xDataset import *
         
         # initialize an instance of the Dataset
         ds = xDataset(dataset = [["tree", "man"],
