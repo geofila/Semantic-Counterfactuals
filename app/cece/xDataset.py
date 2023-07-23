@@ -1,6 +1,6 @@
-from refine import *
-from queries import Query
-from wordnet import *
+from .refine import *
+from .queries import Query
+from .wordnet import *
 import numpy as np
 
 def createMSQ(list_of_terms, connect_to_wordnet = False):

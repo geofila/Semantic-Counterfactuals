@@ -1,6 +1,6 @@
 # Conceptual Edits as Counterfactual Explanations (CECE)
 
-![png](https://github.com/geofila/Semantic-Counterfactuals/blob/main/app/images/logo.png)
+![png](https://github.com/geofila/Semantic-Counterfactuals/blob/main/app/images/logo.png?raw=true)
 
 **CECE: a powerful Python library for generating semantic counterfactual explanations for any machine learning algorithm.**
 
@@ -115,7 +115,7 @@ print ("Cost: ", r[0])
     Cost:  14
 
 
-## Or even simpler
+### or even simpler
 
 
 ```python
@@ -134,7 +134,7 @@ print ("Cost: ", r[0])
     Cost:  14
 
 
-## ## Use Case 2: Use it for a Datatset
+## Use Case 2: Use it for a Datatset
 
 
 ```python
@@ -190,7 +190,7 @@ for idx, cost in results.items():
     Cost: 36 for 'indoor' with id: 2
 
 
-### Explain Method - Get a Semantic Counterfatual
+## Explain Method - Get a Semantic Counterfatual
 
 
 ```python
@@ -259,7 +259,7 @@ ds.find_edits(["car", "man"], ["woman", "truck"])
 
 
 
-### Global Explanations 
+## Global Explanations 
 
 
 ```python
@@ -320,5 +320,5 @@ plt.show()
 
 
     
-![png](https://github.com/geofila/Semantic-Counterfactuals/blob/main/app/images/global_explanations_example.png)
+![png](https://github.com/geofila/Semantic-Counterfactuals/blob/main/app/images/global_explanations_example.png?raw=true)
     

@@ -5,8 +5,8 @@ with open("app/README.md", "r") as f:
 
 setup(
     name="cece",
-    version="0.0.02",
-    description="Semantic Edits as Counterfctual Explanations",
+    version="0.0.05",
+    description="Conceptual Edits as Counterfactual Explanations",
     package_dir={"": "app"},
     packages=find_packages(where="app"),
     long_description=long_description,

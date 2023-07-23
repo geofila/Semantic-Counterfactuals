@@ -1,8 +1,8 @@
 # Conceptual Edits as Counterfactual Explanations (CECE)
 
-![png](images/logo.png)
+![png](https://github.com/geofila/Semantic-Counterfactuals/blob/main/app/images/logo.png?raw=true)
 
-**CECE: a powerful Python AI library for generating semantic counterfactual explanations for any machine learning model.**
+**CECE: a powerful Python library for generating semantic counterfactual explanations for any machine learning algorithm.**
 
 More information about the framework and the algorithm that the library uses can be found in the paper: [Choose your Data Wisely: A Framework for Semantic Counterfactuals
 ](https://arxiv.org/pdf/2305.17667.pdf).
@@ -17,7 +17,7 @@ More information about the framework and the algorithm that the library uses can
 }
 ```
 
-# How to use the library
+# How to install the library
 ```python
 # Install cece
 pip install cece
@@ -31,6 +31,7 @@ cd CECE
 git install .
 ```
 
+# How to install the library
 
 ## Use Case 1: Calculate the semantic distance between 2 queries
 
@@ -114,7 +115,7 @@ print ("Cost: ", r[0])
     Cost:  14
 
 
-## Or even simpler
+### or even simpler
 
 
 ```python
@@ -133,7 +134,7 @@ print ("Cost: ", r[0])
     Cost:  14
 
 
-## ## Use Case 2: Use it for a Datatset
+## Use Case 2: Use it for a Datatset
 
 
 ```python
@@ -189,7 +190,7 @@ for idx, cost in results.items():
     Cost: 36 for 'indoor' with id: 2
 
 
-### Explain Method - Get a Semantic Counterfatual
+## Explain Method - Get a Semantic Counterfatual
 
 
 ```python
@@ -258,7 +259,7 @@ ds.find_edits(["car", "man"], ["woman", "truck"])
 
 
 
-### Global Explanations 
+## Global Explanations 
 
 
 ```python
@@ -319,11 +320,5 @@ plt.show()
 
 
     
-![png](images/global_explanations_example.png)
+![png](https://github.com/geofila/Semantic-Counterfactuals/blob/main/app/images/global_explanations_example.png?raw=true)
     
-
-
-
-```python
-
-```
