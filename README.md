@@ -1,6 +1,6 @@
 # Conceptual Edits as Counterfactual Explanations (CECE)
 
-![png](app/images/logo.png)
+![png](https://github.com/geofila/Semantic-Counterfactuals/blob/main/app/images/logo.png)
 
 **CECE: a powerful Python AI library for generating semantic counterfactual explanations for any machine learning model.**
 
@@ -27,7 +27,7 @@ pip install cece
 
 ```python
 git clone https://github.com/geofila/Semantic-Counterfactuals.git
-cd cd Semantic-Counterfactuals
+cd CECE
 git install .
 ```
 
@@ -319,11 +319,5 @@ plt.show()
 
 
     
-![png](app/images/global_explanations_example.png)
+![png](https://github.com/geofila/Semantic-Counterfactuals/blob/main/app/images/global_explanations_example.png)
     
-
-
-
-```python
-
-```
