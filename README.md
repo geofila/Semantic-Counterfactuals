@@ -17,7 +17,7 @@ More information about the framework and the algorithm that the library uses can
 }
 ```
 
-# How to use the library
+# How to install the library
 ```python
 # Install cece
 pip install cece
@@ -31,6 +31,7 @@ cd CECE
 git install .
 ```
 
+# How to install the library
 
 ## Use Case 1: Calculate the semantic distance between 2 queries
 
