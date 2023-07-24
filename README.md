@@ -4,6 +4,10 @@
 
 **CECE: a powerful Python library for generating semantic counterfactual explanations for any machine learning algorithm.**
 
+<a target="_blank" href="https://colab.research.google.com/github/geofila/Semantic-Counterfactuals/blob/main/app/cece/playground.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>
+
 More information about the framework and the algorithm that the library uses can be found in the paper: [Choose your Data Wisely: A Framework for Semantic Counterfactuals
 ](https://arxiv.org/pdf/2305.17667.pdf).
 
@@ -31,7 +35,7 @@ cd Semantic-Counterfactuals
 git install .
 ```
 
-# How to install the library
+# How to use the library
 
 ## Use Case 1: Calculate the semantic distance between 2 queries
 
