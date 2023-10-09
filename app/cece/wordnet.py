@@ -9,9 +9,21 @@ def find_maximum_path(paths):
     return [p.name() for p in max_path]
 
 
-def connect_term_to_wordnet(term):
-    synset = wordnet.synsets(term)[0]
+
+def _connect_term_to_wordnet(term):
+    synset = wordnet.synsets(term)
+    if len(synset) == 0:
+        raise (Exception("Term not found in WordNet: " + term))
+    synset = synset[0]
     return set(find_maximum_path(synset.hypernym_paths()))
+
+def connect_term_to_wordnet(term):
+
+    if "^" in term:
+        term1, term2 = term.split("^")
+        return _connect_term_to_wordnet(term1).union(_connect_term_to_wordnet(term2))
+    else:
+        return _connect_term_to_wordnet(term)
 
 
 def connect_list_to_wordnet(list_of_terms):

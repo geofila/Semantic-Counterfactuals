@@ -326,3 +326,116 @@ plt.show()
     
 ![png](https://github.com/geofila/Semantic-Counterfactuals/blob/main/app/images/global_explanations_example.png?raw=true)
     
+# How to use the library with Graphs 
+
+```python
+# Create an instance of a graph
+# The graph bellow contains the triples:
+# (car, in, garage)
+# (person, in, car)
+# (person, in, garage)
+
+instance1 = [
+    connect_list_to_wordnet(["car", "in^garage"]),
+    connect_list_to_wordnet(["person", "in^car"]),
+    connect_list_to_wordnet(["person", "in^garage"]),
+]
+
+# and also we create two additional instances in order to create an Explanation Dataset
+instance2 = [
+    connect_list_to_wordnet(["car", "in^garage"]),
+    connect_list_to_wordnet(["cat", "in^car"]),
+    connect_list_to_wordnet(["person", "in^garage"]),
+]
+    
+
+instance3 = [
+    connect_list_to_wordnet(["car", "in^garage"]),
+    connect_list_to_wordnet(["dog", "in^car"]),
+    connect_list_to_wordnet(["person", "in^garage"]),
+]
+
+
+from cece.graph import *
+
+# we transform the instances to a graph through the Graph class
+# this class gives us additional functionality
+g1 = Graph (instance1, connect_to_wordnet = False)
+g2 = Graph (instance2, connect_to_wordnet = False)
+g3 = Graph (instance3, connect_to_wordnet = False)
+
+
+# calculate the set edit cost from graph g1 to graph g2, along with the set edit path
+g1.cost(g2, return_edits = True)
+
+```
+
+
+```python
+(9,
+ {'additions': [],
+  'removals': [],
+  'transf': [([{'physical_entity.n.01', 'whole.n.02', 'person.n.01', 'entity.n.01', 'living_thing.n.01', 'object.n.01', 'organism.n.01'}
+     {'abstraction.n.06', 'definite_quantity.n.01', 'whole.n.02', 'measure.n.02', 'unit_of_measurement.n.01', 'instrumentality.n.03', 'motor_vehicle.n.01', 'conveyance.n.03', 'car.n.01', 'vehicle.n.01', 'artifact.n.01', 'physical_entity.n.01', 'self-propelled_vehicle.n.01', 'linear_unit.n.01', 'entity.n.01', 'object.n.01', 'inch.n.01', 'wheeled_vehicle.n.01'}]
+    {},
+    [{'physical_entity.n.01', 'whole.n.02', 'placental.n.01', 'cat.n.01', 'animal.n.01', 'entity.n.01', 'living_thing.n.01', 'object.n.01', 'chordate.n.01', 'mammal.n.01', 'feline.n.01', 'organism.n.01', 'vertebrate.n.01', 'carnivore.n.01'}
+     {'abstraction.n.06', 'definite_quantity.n.01', 'whole.n.02', 'measure.n.02', 'unit_of_measurement.n.01', 'instrumentality.n.03', 'motor_vehicle.n.01', 'conveyance.n.03', 'car.n.01', 'vehicle.n.01', 'artifact.n.01', 'physical_entity.n.01', 'self-propelled_vehicle.n.01', 'linear_unit.n.01', 'entity.n.01', 'object.n.01', 'inch.n.01', 'wheeled_vehicle.n.01'}]
+    {})]})
+```
+
+### Simpler way to create a graph
+
+```python
+# simpler way to create graphs using connect_to_wordnet = True parameter
+instance1 = [["car", "in^garage"], ["person", "in^car"], ["person", "in^garage"]]
+instance2 = [["car", "in^garage"], ["cat", "in^car"], ["person", "in^garage"]]
+instance3 = [["car", "in^garage"], ["dog", "in^car"], ["person", "in^garage"]]
+
+from cece.graph import *
+
+g1 = Graph (instance1, connect_to_wordnet = True)
+g2 = Graph (instance2, connect_to_wordnet = True)
+g3 = Graph (instance3, connect_to_wordnet = True)
+
+g1.cost(g2, return_edits = True)
+```
+
+
+```python
+(9,
+ {'additions': [],
+  'removals': [],
+  'transf': [([{'physical_entity.n.01', 'whole.n.02', 'person.n.01', 'entity.n.01', 'living_thing.n.01', 'object.n.01', 'organism.n.01'}
+     {'abstraction.n.06', 'definite_quantity.n.01', 'whole.n.02', 'measure.n.02', 'unit_of_measurement.n.01', 'instrumentality.n.03', 'motor_vehicle.n.01', 'conveyance.n.03', 'car.n.01', 'vehicle.n.01', 'artifact.n.01', 'physical_entity.n.01', 'self-propelled_vehicle.n.01', 'linear_unit.n.01', 'entity.n.01', 'object.n.01', 'inch.n.01', 'wheeled_vehicle.n.01'}]
+    {},
+    [{'physical_entity.n.01', 'whole.n.02', 'placental.n.01', 'cat.n.01', 'animal.n.01', 'entity.n.01', 'living_thing.n.01', 'object.n.01', 'chordate.n.01', 'mammal.n.01', 'feline.n.01', 'organism.n.01', 'vertebrate.n.01', 'carnivore.n.01'}
+     {'abstraction.n.06', 'definite_quantity.n.01', 'whole.n.02', 'measure.n.02', 'unit_of_measurement.n.01', 'instrumentality.n.03', 'motor_vehicle.n.01', 'conveyance.n.03', 'car.n.01', 'vehicle.n.01', 'artifact.n.01', 'physical_entity.n.01', 'self-propelled_vehicle.n.01', 'linear_unit.n.01', 'entity.n.01', 'object.n.01', 'inch.n.01', 'wheeled_vehicle.n.01'}]
+    {})]})
+```
+
+```python
+instance1 = [["car", "in^garage"], ["person", "in^car"], ["person", "in^garage"]]
+instance2 = [["car", "in^garage"], ["cat", "in^car"], ["person", "in^garage"]]
+instance3 = [["car", "in^garage"], ["dog", "in^car"], ["person", "in^garage"]]
+
+dataset = [instance1, instance2, instance3]
+gd = xDataset(dataset, ["outdoor", "indoor", "indoor"], connect_to_wordnet =True, is_graph = True)
+```
+
+### Retrieve the Closest Sample using Graphs
+
+```python
+gd.retrieve([["car", "in^car"], ["person", "in^car"], ["person", "in^garage"]])
+```
+```python
+{0: 11, 1: 20, 2: 20}
+```
+
+### Explain a Sample using Graphs
+
+```python
+gd.explain([["car", "in^car"], ["person", "in^car"], ["person", "in^garage"]], "indoor")
+```
+```python
+(0, 11)
+```

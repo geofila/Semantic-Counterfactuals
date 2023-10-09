@@ -1,6 +1,7 @@
 from .refine import *
 from .queries import Query
 from .wordnet import *
+from .graph import *
 import numpy as np
 
 def createMSQ(list_of_terms, connect_to_wordnet = False):
@@ -10,7 +11,7 @@ def createMSQ(list_of_terms, connect_to_wordnet = False):
         list_of_terms = [set([term]) for term in list_of_terms]
     return Query(np.array(list_of_terms))
 
-class xDataset:
+class conceptDataset:
 
     def __init__(self, dataset = None, labels = None, connect_to_wordnet = False):
         """
@@ -160,6 +161,88 @@ class xDataset:
         return global_explanation
 
 
+    def __repr__(self):
+        return f"xDataset with {len(self.dataset)} instances"
+
+    def __len__(self):
+        return len(self.dataset)   
+    
+    def __getitem__(self, idx):
+        return self.dataset[idx]
+
+    def __iter__(self):
+        return iter(self.dataset)
+    
+
+class GraphDataset:
+
+    def __init__(self, dataset, labels = None, connect_to_wordnet = False):
+        """
+        Initialize the xDataset instance
+        dataset: a list of list of objects e.g. [[obj1, obj2, rel^obj2], [obj3, obj4]]
+        labels: a list of labels for each instance e.g. ["label1", "label2"] if None then the dataset is unlabeled
+        connect_to_wordnet: if True then the objects are connected to wordnet
+        """
+
+        self.raw_dataset = dataset
+        self.raw_labels = labels
+        self.connect_to_wordnet = connect_to_wordnet
+
+
+        self.dataset = dataset
+        self.labels = labels
+
+        if self.dataset:
+            self.parse_dataset()
+
+
+    def parse_dataset(self):
+        """
+        Parse the dataset (from the argument dataset) to create the Graphs
+        """
+
+        if len(self.dataset) != len(self.labels):
+            raise ValueError("The number of labels must be equal to the number of instances")
+        
+        self.dataset = {idx: Graph (objects, connect_to_wordnet = self.connect_to_wordnet) for idx, objects in enumerate(self.dataset)}
+        self.labels = {idx: label for idx, label in enumerate(self.labels)}
+
+    
+    def retrieve(self, query, obj_distance = None, addition_cost = None, removal_cost = None):
+        """
+        Retrieve: rank the instances based on their distance from the given query
+        query: the query to search (Graph or just a list of lists of objects)
+        """
+        if not isinstance(query, Graph):
+            query = Graph(query, self.connect_to_wordnet)
+        
+        distances = {}
+        for idx, cand_q in self.dataset.items():
+            cost = query.cost(cand_q, obj_distance = obj_distance, addition_cost = addition_cost, removal_cost = removal_cost)       
+            distances[idx] = cost
+        
+        # sort distances based on the cost (minimum first)
+        distances = {k: v for k, v in sorted(distances.items(), key=lambda item: item[1])}
+        return distances
+
+
+    def explain(self, query, label, obj_distance = None, addition_cost = None, removal_cost = None):
+        """
+        Search for the closest query in the dataset
+        query: the query to search (Graph or just a list of objects)
+        """
+
+        if self.labels is None:
+            raise ValueError("The dataset is not labeled")
+        
+        if not isinstance(query, Graph):
+            query = Graph(query, self.connect_to_wordnet)
+
+        distances = self.retrieve(query, obj_distance = obj_distance, addition_cost = addition_cost, removal_cost = removal_cost)
+
+        for idx, cost in distances.items():
+            if self.labels[idx] != label:
+                return idx, cost
 
     def __repr__(self):
         return f"xDataset with {len(self.dataset)} instances"
@@ -172,3 +255,71 @@ class xDataset:
 
     def __iter__(self):
         return iter(self.dataset)
+
+
+
+class xDataset:
+
+    def __init__(self, dataset = None, labels = None, connect_to_wordnet = False, is_graph = False):
+        """
+        Initialize the xDataset instance
+        dataset: a list of list of objects e.g. [[obj1, obj2, rel^obj2], [obj3, obj4]]
+        labels: a list of labels for each instance e.g. ["label1", "label2"] if None then the dataset is unlabeled
+        connect_to_wordnet: if True then the objects are connected to wordnet
+        is_graph: if True then the dataset is a graph dataset otherwise it is a concept dataset
+        """
+        self.is_graph = is_graph
+        self.labels = labels
+
+        if is_graph:
+            self.dataset = GraphDataset(dataset, labels, connect_to_wordnet)
+        else:
+            self.dataset = conceptDataset(dataset, labels, connect_to_wordnet)
+
+    def retrieve(self, query, obj_distance = None, addition_cost = None, removal_cost = None):
+        """
+        Retrieve: rank the instances based on their distance from the given query
+        query: the query to search (Query/Graph or just a list of lists of objects)
+        """
+        return self.dataset.retrieve(query, obj_distance = obj_distance, addition_cost = addition_cost, removal_cost = removal_cost)
+    
+    def explain(self, query, label, obj_distance = None, addition_cost = None, removal_cost = None):
+        """
+        Search for the closest query in the dataset
+        query: the query to search (Query/Graph or just a list of objects)
+        """
+        return self.dataset.explain(query, label, obj_distance = obj_distance, addition_cost = addition_cost, removal_cost = removal_cost)
+    
+    def global_explanation(self, queries, labels, obj_distance = None, addition_cost = None, removal_cost = None):
+        """
+        Search for the closest query in the dataset. Works only for conceptDataset not for GraphDataset (graphs are not supported yet)
+        query: the query to search (Query or just a list of objects)
+        """
+        if self.is_graph:
+            raise (Exception("Global explanation is not supported for GraphDataset but only for conceptDataset!"))
+        return self.dataset.global_explanation(queries, labels, obj_distance = obj_distance, addition_cost = addition_cost, removal_cost = removal_cost)
+    
+    def find_edits(self, q1, q2, obj_distance = None, addition_cost = None, removal_cost = None, verbose = False):
+        """
+        Find the edits between 2 queries
+        q1: the first query (Query or just a list of objects)
+        q2: the second query (Query or just a list of objects)
+        """
+        if self.is_graph:
+            raise (Exception("Global explanation is not supported for GraphDataset but only for conceptDataset!"))
+        return self.dataset.find_edits(q1, q2, obj_distance = obj_distance, addition_cost = addition_cost, removal_cost = removal_cost, verbose = verbose)
+
+
+    def __repr__(self):
+        return self.dataset.__repr__()
+    
+    def __len__(self):  
+        return len(self.dataset)
+    
+    def __getitem__(self, idx):
+        return self.dataset[idx]
+    
+    def __iter__(self):
+        return iter(self.dataset)
+    
+    
