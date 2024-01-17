@@ -11,11 +11,16 @@ def find_maximum_path(paths):
 
 
 def _connect_term_to_wordnet(term):
-    synset = wordnet.synsets(term)
-    if len(synset) == 0:
-        raise (Exception("Term not found in WordNet: " + term))
-    synset = synset[0]
-    return set(find_maximum_path(synset.hypernym_paths()))
+    if "." not in term: # we have to search for this term in wordnet
+        synset = wordnet.synsets(term)
+        if len(synset) == 0:
+            raise (Exception("Term not found in WordNet: " + term))
+        synset = synset[0]
+        return set(find_maximum_path(synset.hypernym_paths()))
+    else: #otherwise we already have the synset
+        synset = wordnet.synset(term)
+        return set(find_maximum_path(synset.hypernym_paths()))
+
 
 def connect_term_to_wordnet(term):
 

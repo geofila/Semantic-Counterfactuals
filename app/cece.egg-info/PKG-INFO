@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: cece
-Version: 0.1.1
+Version: 0.1.2
 Summary: Conceptual Edits as Counterfactual Explanations
 Home-page: UNKNOWN
 Author: Giorgos Filandrianos
@@ -429,12 +429,12 @@ Description: # Conceptual Edits as Counterfactual Explanations (CECE)
         dataset = [instance1, instance2, instance3]
         gd = xDataset(dataset, ["outdoor", "indoor", "indoor"], connect_to_wordnet =True, is_graph = True)
         ```
+        
         ### Retrieve the Closest Sample using Graphs
         
         ```python
         gd.retrieve([["car", "in^car"], ["person", "in^car"], ["person", "in^garage"]])
         ```
-        
         ```python
         {0: 11, 1: 20, 2: 20}
         ```
@@ -444,7 +444,6 @@ Description: # Conceptual Edits as Counterfactual Explanations (CECE)
         ```python
         gd.explain([["car", "in^car"], ["person", "in^car"], ["person", "in^garage"]], "indoor")
         ```
-        
         ```python
         (0, 11)
         ```
