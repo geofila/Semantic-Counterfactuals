@@ -4,12 +4,28 @@ from .wordnet import *
 from .graph import *
 import numpy as np
 
+# def createMSQ(list_of_terms, connect_to_wordnet = False):
+#     if connect_to_wordnet:
+#         list_of_terms = connect_list_to_wordnet(list_of_terms)
+#     else:
+#         list_of_terms = [set([term]) for term in list_of_terms]
+#     return Query(np.array(list_of_terms))
+
 def createMSQ(list_of_terms, connect_to_wordnet = False):
     if connect_to_wordnet:
         list_of_terms = connect_list_to_wordnet(list_of_terms)
     else:
-        list_of_terms = [set([term]) for term in list_of_terms]
+        lof = []
+        for term in list_of_terms:
+            if isinstance (term, str):
+                lof.append(set([term]))
+            elif isinstance (term, set):
+                lof.append(term)
+            elif isinstance (term, list):
+                lof.append(set(term))
+        list_of_terms = lof
     return Query(np.array(list_of_terms))
+
 
 class conceptDataset:
 
